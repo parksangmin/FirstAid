@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "658637112379",
+    "project_id": "firstaid-13839",
+    "storage_bucket": "firstaid-13839.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658637112379:android:2dbf23a9085c8f56ca881e",
+        "android_client_info": {
+          "package_name": "com.sangmin.firstaid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658637112379-37ljbubovpp6s5lrpb57v0bas8e533nr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiUCB8Qmc_ukNok7V7hkpKdWtjrfk8Fxg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658637112379-37ljbubovpp6s5lrpb57v0bas8e533nr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
