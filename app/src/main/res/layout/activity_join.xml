@@ -38,7 +38,7 @@
                 android:id="@+id/emailEdt"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:imeOptions="actionNext"
                 android:hint="email"
                 style="@style/AuthEditText"/>

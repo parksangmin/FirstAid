@@ -32,19 +32,18 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.passwordEdt.text.toString()
 
 
-            auth.createUserWithEmailAndPassword(email, password)
+            auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
 
+                        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, MainActivity::class.java)
-//                            기존 액티비티를 다 날려버린다
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        //            기존에 있던 Activity들을 날려주겠다
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
 
-
-                        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-
                     } else {
+
                         Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
 
                     }

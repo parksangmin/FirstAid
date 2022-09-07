@@ -70,9 +70,9 @@ class JoinActivity : AppCompatActivity() {
 
                             Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show()
 
-                            val intent = Intent(this, MainActivity::class.java)
-//                            기존 액티비티를 다 날려버린다
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            val intent = Intent(this, LoginActivity::class.java)
+                            //            기존에 있던 Activity들을 날려주겠다
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
 
                         } else {
