@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/bottom_nav_home"
+        android:title="홈"/>
+
+    <item
+        android:id="@+id/bookmark"
+        android:icon="@drawable/bottom_nav_bookmark"
+        android:title="북마크"/>
+
+
+    <item
+        android:id="@+id/board"
+        android:icon="@drawable/bottom_nav_board"
+        android:title="게시판"/>
+
+
+</menu>

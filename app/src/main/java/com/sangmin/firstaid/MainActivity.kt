@@ -4,15 +4,23 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.databinding.DataBindingUtil
+import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.sangmin.firstaid.adapters.MainViewPagerAdapter
 import com.sangmin.firstaid.auth.IntroActivity
 import com.sangmin.firstaid.auth.LoginActivity
+import com.sangmin.firstaid.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+
+    lateinit var mBinding : ActivityMainBinding
+
+    lateinit var mPagerAdapter : MainViewPagerAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +29,36 @@ class MainActivity : AppCompatActivity() {
 
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        mPagerAdapter = MainViewPagerAdapter(this)
+        mBinding.mainViewPager.adapter = mPagerAdapter
+
+
+//        뷰페이저 연동 event
+        mBinding.mainViewPager.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback(){
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    mBinding.bottomNav.menu.getItem(position).isChecked = true
+                }
+            }
+        )
+
+
+
+//        바텀 네비게이션 클릭 이벤트 처리
+        mBinding.bottomNav.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.home -> mBinding.mainViewPager.currentItem = 0
+                R.id.bookmark -> mBinding.mainViewPager.currentItem = 1
+                R.id.board -> mBinding.mainViewPager.currentItem = 2
+
+            }
+
+            return@setOnItemSelectedListener true
+        }
+
 
 
 

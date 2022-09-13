@@ -1,60 +1,127 @@
 package com.sangmin.firstaid.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.sangmin.firstaid.R
+import com.sangmin.firstaid.adapters.BookmarkRVAdapter
+import com.sangmin.firstaid.data.Model
+import com.sangmin.firstaid.databinding.FragmentBookmarkBinding
+import com.sangmin.firstaid.databinding.FragmentHomeBinding
+import com.sangmin.firstaid.utils.FBAuth
+import com.sangmin.firstaid.utils.FBRef
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [BookmarkFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class BookmarkFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding : FragmentBookmarkBinding
+
+    private val TAG = BookmarkFragment :: class.java.simpleName
+
+    val bookmarkIdList = mutableListOf<String>()
+    val items = ArrayList<Model>()
+    val itemKeyList = ArrayList<String>()
+
+    lateinit var rvAdapter : BookmarkRVAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bookmark, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bookmark, container, false)
+        return  binding.root
+
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BookmarkFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BookmarkFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        //        2. 사용자가 북마크한 정보를 다 가져옴!
+
+        getBookmarkData()
+
+        //     3. 전체 켄테츠 중에서, 사용자가 북마크한 정보만 보여줌!
+
+        rvAdapter = BookmarkRVAdapter(requireContext(), items, itemKeyList, bookmarkIdList)
+
+        val rv : RecyclerView = binding.BookmarkRV
+        rv.adapter = rvAdapter
+
+        rv.layoutManager = LinearLayoutManager(requireContext())
     }
+
+    private fun getCategoryData(){
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                for(dataModel in dataSnapshot.children){
+
+                    Log.d(TAG, dataModel.toString())
+                    val item = dataModel.getValue(Model::class.java)
+
+                    if(bookmarkIdList.contains(dataModel.key.toString())){
+                        items.add(item!!)
+                        itemKeyList.add(dataModel.key.toString())
+
+                    }
+
+
+                }
+                rvAdapter.notifyDataSetChanged()
+
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w("Category1ListActivity", "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        FBRef.category.addValueEventListener(postListener)
+    }
+
+
+    private fun getBookmarkData(){
+
+        //        Firebase Realtime Database 데이터 읽기
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+
+                for(dataModel in dataSnapshot.children){
+
+                    Log.d(TAG, dataModel.toString())
+                    bookmarkIdList.add(dataModel.key.toString())
+
+
+                }
+
+//                1. 전체 카테고리에 있는 컨텐츠 데이터들을 다 가져옴!
+                getCategoryData()
+
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w("Category1ListActivity", "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        FBRef.bookmarkRef.child(FBAuth.getUid()).addValueEventListener(postListener)
+
+
+    }
+
+
 }

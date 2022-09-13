@@ -26,9 +26,6 @@ class IntroActivity : AppCompatActivity() {
         auth = Firebase.auth
 
 
-
-
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_intro)
 
         binding.loginBtn.setOnClickListener {
