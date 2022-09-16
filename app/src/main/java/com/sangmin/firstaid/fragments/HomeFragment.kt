@@ -34,8 +34,34 @@ class HomeFragment : Fragment() {
 
         binding.category1Layout.setOnClickListener {
             val intent = Intent(context, CategoryListActivity::class.java)
+            intent.putExtra("category", "category1")
             startActivity(intent)
+
         }
+
+        binding.category2Layout.setOnClickListener {
+            val intent = Intent(context, CategoryListActivity::class.java)
+            intent.putExtra("category", "category2")
+            startActivity(intent)
+
+        }
+
+
+        binding.category3Layout.setOnClickListener {
+            val intent = Intent(context, CategoryListActivity::class.java)
+            intent.putExtra("category", "category3")
+            startActivity(intent)
+
+        }
+
+
+        binding.category4Layout.setOnClickListener {
+            val intent = Intent(context, CategoryListActivity::class.java)
+            intent.putExtra("category", "category4")
+            startActivity(intent)
+
+        }
+
 
     }
 }
