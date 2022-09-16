@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sangmin.firstaid.CategoryShowActivity
 import com.sangmin.firstaid.R
-import com.sangmin.firstaid.data.BookmarkModel
 import com.sangmin.firstaid.data.Model
 import com.sangmin.firstaid.utils.FBAuth
 import com.sangmin.firstaid.utils.FBRef
@@ -71,20 +70,39 @@ class CategoryRVAdapter(val context : Context,
 
 
 
+
+
 //            itemView = category1_item, imageurl1,2,3등의 title을 보여준다
             val Maintitle = itemView.findViewById<TextView>(R.id.textArea)
             val imageView  = itemView.findViewById<ImageView>(R.id.ImgView)
             val bookmark = itemView.findViewById<ImageView>(R.id.bookmarkImg)
+
+            if (bookmarkIdList.contains(key)){
+                bookmark.setImageResource(R.drawable.ic_baseline_bookmark_24)
+            } else {
+                bookmark.setImageResource(R.drawable.bookmark_white)
+            }
 
 //         북마크 클릭이벤트 구현
             bookmark.setOnClickListener {
                 Log.d("CategoryRVAdapter", FBAuth.getUid())
                 Toast.makeText(context, key, Toast.LENGTH_SHORT).show()
 
-                FBRef.bookmarkRef
-                    .child(FBAuth.getUid())
-                    .child(key)
-                    .setValue(BookmarkModel(true))
+                if (bookmarkIdList.contains(key)) {
+//                   북마크가 있을 때 삭제
+                    FBRef.bookmarkRef
+                        .child(FBAuth.getUid())
+                        .child(key)
+                        .removeValue()
+
+                } else {
+//                    북마크가 없을 때
+                    FBRef.bookmarkRef
+                        .child(FBAuth.getUid())
+                        .child(key)
+                        .setValue(item)
+
+                }
             }
 
 
