@@ -13,6 +13,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.sangmin.firstaid.R
+import com.sangmin.firstaid.adapters.BookmarkRVAdapter
 import com.sangmin.firstaid.data.Model
 import com.sangmin.firstaid.databinding.FragmentBookmarkBinding
 import com.sangmin.firstaid.utils.FBAuth
@@ -24,6 +25,11 @@ class BookmarkFragment : Fragment() {
     private lateinit var binding : FragmentBookmarkBinding
 
     private val TAG = BookmarkFragment :: class.java.simpleName
+
+    val bookmarkIdList = mutableListOf<String>()
+    val items = ArrayList<Model>()
+    val itemKeyList = ArrayList<String>()
+    lateinit var rvAdapter : BookmarkRVAdapter
 
 
 
@@ -41,9 +47,18 @@ class BookmarkFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getCategoryData()
 
+        //        2. 사용자가 북마크한 정보를 다 가져옴!
         getBookmarkData()
+
+
+
+        rvAdapter = BookmarkRVAdapter(requireContext(), items, itemKeyList, bookmarkIdList)
+
+        val rv : RecyclerView = binding.BookmarkRV
+        rv.adapter = rvAdapter
+
+        rv.layoutManager = LinearLayoutManager(requireContext())
 
 
 
@@ -54,13 +69,28 @@ class BookmarkFragment : Fragment() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
+
+
+
                 for (dataModel in dataSnapshot.children) {
 
                     Log.d(TAG, dataModel.toString())
+                    val item = dataModel.getValue(Model::class.java)
+                    //     3. 전체 켄테츠 중에서, 사용자가 북마크한 정보만 보여줌!
+                    if(bookmarkIdList.contains(dataModel.key.toString())){
+                        items.add(item!!)
+                        itemKeyList.add(dataModel.key.toString())
+
+
+
+
+                    }
+
 
 
 
                 }
+                rvAdapter.notifyDataSetChanged()
 //                어댑터를 동기화하는 작업
 
 
@@ -75,6 +105,8 @@ class BookmarkFragment : Fragment() {
         }
         FBRef.category1.addValueEventListener(postListener)
         FBRef.category2.addValueEventListener(postListener)
+        FBRef.category3.addValueEventListener(postListener)
+        FBRef.category4.addValueEventListener(postListener)
 
 
 
@@ -89,15 +121,21 @@ class BookmarkFragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
 
+                bookmarkIdList.clear()
+
+
                 for(dataModel in dataSnapshot.children){
 
                     Log.d(TAG, dataModel.toString())
+                    bookmarkIdList.add(dataModel.key.toString())
+
 
 
 
                 }
 
 //                1. 전체 카테고리에 있는 컨텐츠 데이터들을 다 가져옴!
+                getCategoryData()
 
 
 

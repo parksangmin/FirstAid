@@ -12,6 +12,8 @@ class FBRef {
 
         val category1  = database.getReference("firstaid")
         val category2  = database.getReference("firstaid2")
+        val category3  = database.getReference("firstaid3")
+        val category4  = database.getReference("firstaid4")
 
 
 
