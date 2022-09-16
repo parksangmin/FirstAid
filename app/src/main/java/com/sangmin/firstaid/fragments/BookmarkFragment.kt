@@ -15,11 +15,15 @@ import com.google.firebase.database.ValueEventListener
 import com.sangmin.firstaid.R
 import com.sangmin.firstaid.data.Model
 import com.sangmin.firstaid.databinding.FragmentBookmarkBinding
+import com.sangmin.firstaid.utils.FBAuth
+import com.sangmin.firstaid.utils.FBRef
 
 
 class BookmarkFragment : Fragment() {
 
     private lateinit var binding : FragmentBookmarkBinding
+
+    private val TAG = BookmarkFragment :: class.java.simpleName
 
 
 
@@ -37,10 +41,80 @@ class BookmarkFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        getCategoryData()
+
+        getBookmarkData()
+
 
 
 
     }
+
+    private fun getCategoryData(){
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                for (dataModel in dataSnapshot.children) {
+
+                    Log.d(TAG, dataModel.toString())
+
+
+
+                }
+//                어댑터를 동기화하는 작업
+
+
+
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w("CategoryListActivity", "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        FBRef.category1.addValueEventListener(postListener)
+        FBRef.category2.addValueEventListener(postListener)
+
+
+
+
+
+    }
+
+    private fun getBookmarkData(){
+
+        //        Firebase Realtime Database 데이터 읽기
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+
+                for(dataModel in dataSnapshot.children){
+
+                    Log.d(TAG, dataModel.toString())
+
+
+
+                }
+
+//                1. 전체 카테고리에 있는 컨텐츠 데이터들을 다 가져옴!
+
+
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w("Category1ListActivity", "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        FBRef.bookmarkRef.child(FBAuth.getUid()).addValueEventListener(postListener)
+
+
+    }
+
+
+
 
 
 }
