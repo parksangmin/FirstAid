@@ -17,7 +17,8 @@ import com.sangmin.firstaid.data.Model
 
 
 class CategoryRVAdapter(val context : Context,
-                        val items : ArrayList<Model>
+                        val items : ArrayList<Model>,
+                        val keyList : ArrayList<String>
 
 ) : RecyclerView.Adapter<CategoryRVAdapter.Viewholder>(){
 
@@ -71,7 +72,7 @@ class CategoryRVAdapter(val context : Context,
 
 //         북마크 클릭이벤트 구현
             bookmark.setOnClickListener {
-                Toast.makeText(context, "북마크가 출력되었습니다다", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, keyList.toString(), Toast.LENGTH_SHORT).show()
             }
 
 

@@ -34,7 +34,7 @@ class CategoryListActivity : AppCompatActivity() {
         val itemKeyList = ArrayList<String>()
 
 
-        val rvAdapter = CategoryRVAdapter(baseContext, items)
+        val rvAdapter = CategoryRVAdapter(baseContext, items, itemKeyList)
 
         // Write a message to the database
         val database = Firebase.database
