@@ -125,6 +125,8 @@ class CategoryListActivity : AppCompatActivity() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
+                bookmarkIdList.clear()
+
 
 
                 for(dataModel in dataSnapshot.children){
@@ -132,7 +134,7 @@ class CategoryListActivity : AppCompatActivity() {
 
 
                 }
-                Log.d("CategoryListActivity", bookmarkIdList.toString())
+                Log.d("Bookmark", bookmarkIdList.toString())
                 rvAdapter.notifyDataSetChanged()
 
 
