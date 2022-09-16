@@ -21,7 +21,8 @@ import com.sangmin.firstaid.utils.FBRef
 
 class CategoryRVAdapter(val context : Context,
                         val items : ArrayList<Model>,
-                        val keyList : ArrayList<String>
+                        val keyList : ArrayList<String>,
+                        val bookmarkIdList : MutableList<String>
 
 ) : RecyclerView.Adapter<CategoryRVAdapter.Viewholder>(){
 
@@ -34,6 +35,8 @@ class CategoryRVAdapter(val context : Context,
 //   아이템들 하나를 가져온다
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.category1_item,parent, false)
+        Log.d("CategoryRVAdapter", keyList.toString())
+        Log.d("CategoryRVAdapter", bookmarkIdList.toString())
         return Viewholder(v)
     }
 
@@ -73,6 +76,12 @@ class CategoryRVAdapter(val context : Context,
             val imageView  = itemView.findViewById<ImageView>(R.id.ImgView)
             val bookmark = itemView.findViewById<ImageView>(R.id.bookmarkImg)
 
+            if (bookmarkIdList.contains(key)){
+                bookmark.setImageResource(R.drawable.ic_baseline_bookmark_24)
+            } else {
+                bookmark.setImageResource(R.drawable.bookmark_white)
+            }
+
 //         북마크 클릭이벤트 구현
             bookmark.setOnClickListener {
                 Log.d("CategoryRVAdapter", FBAuth.getUid())
@@ -83,8 +92,6 @@ class CategoryRVAdapter(val context : Context,
                     .child(key)
                     .setValue(BookmarkModel(true))
             }
-
-
 
 
 

@@ -24,6 +24,10 @@ class CategoryListActivity : AppCompatActivity() {
 
    lateinit var myRef : DatabaseReference
 
+    val bookmarkIdList = mutableListOf<String>()
+
+    lateinit var rvAdapter : CategoryRVAdapter
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +40,7 @@ class CategoryListActivity : AppCompatActivity() {
         val itemKeyList = ArrayList<String>()
 
 
-        val rvAdapter = CategoryRVAdapter(baseContext, items, itemKeyList)
+         rvAdapter = CategoryRVAdapter(baseContext, items, itemKeyList, bookmarkIdList)
 
         // Write a message to the database
         val database = Firebase.database
@@ -71,9 +75,9 @@ class CategoryListActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 for (dataModel in dataSnapshot.children) {
-                    Log.d("Category1ListActivity", dataModel.toString())
+                    Log.d("CategoryListActivity", dataModel.toString())
                     // 키를 확인하기 위한 로그
-                    Log.d("Category1ListActivity", dataModel.key.toString())
+                    Log.d("CategoryListActivity", dataModel.key.toString())
                     val item = dataModel.getValue(Model::class.java)
                     items.add(item!!)
 //                    파이어 베이스에 있는 데이터 키값을 확인
@@ -82,14 +86,14 @@ class CategoryListActivity : AppCompatActivity() {
                 }
 //                어댑터를 동기화하는 작업
                 rvAdapter.notifyDataSetChanged()
-                Log.d("Category1ListActivity", items.toString())
+                Log.d("CategoryListActivity", items.toString())
 
 
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 // Getting Post failed, log a message
-                Log.w("Category1ListActivity", "loadPost:onCancelled", databaseError.toException())
+                Log.w("CategoryListActivity", "loadPost:onCancelled", databaseError.toException())
             }
         }
         myRef.addValueEventListener(postListener)
@@ -124,18 +128,20 @@ class CategoryListActivity : AppCompatActivity() {
 
 
                 for(dataModel in dataSnapshot.children){
-                    Log.d("getBookmarkData", dataModel.key.toString())
-                    Log.d("getBookmarkData", dataModel.toString())
+                    bookmarkIdList.add(dataModel.key.toString())
 
 
                 }
+                Log.d("CategoryListActivity", bookmarkIdList.toString())
+                rvAdapter.notifyDataSetChanged()
 
 
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 // Getting Post failed, log a message
-                Log.w("Category1ListActivity", "loadPost:onCancelled", databaseError.toException())
+                Log.w("CategoryListActivity", "loadPost:onCancelled", databaseError.toException())
+
             }
         }
 //
