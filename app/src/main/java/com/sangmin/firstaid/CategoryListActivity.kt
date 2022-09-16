@@ -118,16 +118,7 @@ class CategoryListActivity : AppCompatActivity() {
 
         rv.layoutManager = LinearLayoutManager(this)
 
-        rvAdapter.itemClick =
-            object : CategoryRVAdapter.ItemClick {
-                override fun onClick(view: View, position: Int) {
-                    Toast.makeText(baseContext, items[position].title, Toast.LENGTH_SHORT).show()
 
-                    val intent = Intent(this@CategoryListActivity, CategoryShowActivity::class.java)
-                    intent.putExtra("url", items[position].webUrl)
-                    startActivity(intent)
-                }
-            }
 
 
 

@@ -22,12 +22,7 @@ class CategoryRVAdapter(val context : Context,
 ) : RecyclerView.Adapter<CategoryRVAdapter.Viewholder>(){
 
 
-    interface ItemClick {
-        fun onClick(view : View, position: Int)
 
-
-    }
-    var itemClick : ItemClick? = null
 
 
 
@@ -42,11 +37,7 @@ class CategoryRVAdapter(val context : Context,
 //  아이템의 내용물들을 넣어주는 역할
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
 
-    if (itemClick != null){
-        holder.itemView.setOnClickListener { v ->
-            itemClick?.onClick(v, position)
-        }
-    }
+
 
         holder.bindItems(items[position])
 
@@ -61,6 +52,14 @@ class CategoryRVAdapter(val context : Context,
 
     inner class  Viewholder(itemView : View) : RecyclerView.ViewHolder(itemView){
         fun bindItems(item : Model) {
+
+            itemView.setOnClickListener {
+                Toast.makeText(context, item.title, Toast.LENGTH_SHORT).show()
+                val intent = Intent(context, CategoryShowActivity::class.java)
+                intent.putExtra("url", item.webUrl)
+                itemView.context.startActivity(intent)
+
+            }
 
 
 
