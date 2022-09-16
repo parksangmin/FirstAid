@@ -40,7 +40,7 @@ class CategoryRVAdapter(val context : Context,
 
 
 
-        holder.bindItems(items[position])
+        holder.bindItems(items[position], keyList[position])
 
     }
 
@@ -52,7 +52,7 @@ class CategoryRVAdapter(val context : Context,
     }
 
     inner class  Viewholder(itemView : View) : RecyclerView.ViewHolder(itemView){
-        fun bindItems(item : Model) {
+        fun bindItems(item : Model, key : String) {
 
             itemView.setOnClickListener {
                 Toast.makeText(context, item.title, Toast.LENGTH_SHORT).show()
@@ -72,7 +72,7 @@ class CategoryRVAdapter(val context : Context,
 
 //         북마크 클릭이벤트 구현
             bookmark.setOnClickListener {
-                Toast.makeText(context, keyList.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, key, Toast.LENGTH_SHORT).show()
             }
 
 
