@@ -21,7 +21,8 @@ import com.sangmin.firstaid.utils.FBRef
 
 class CategoryRVAdapter(val context : Context,
                         val items : ArrayList<Model>,
-                        val keyList : ArrayList<String>
+                        val keyList : ArrayList<String>,
+                        val bookmarkIdList : MutableList<String>
 
 ) : RecyclerView.Adapter<CategoryRVAdapter.Viewholder>(){
 
@@ -34,6 +35,8 @@ class CategoryRVAdapter(val context : Context,
 //   아이템들 하나를 가져온다
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.category1_item,parent, false)
+        Log.d("CategoryRVAdapte", keyList.toString())
+        Log.d("CategoryRVAdapte", bookmarkIdList.toString())
         return Viewholder(v)
     }
 

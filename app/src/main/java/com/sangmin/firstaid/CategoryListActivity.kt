@@ -25,6 +25,11 @@ class CategoryListActivity : AppCompatActivity() {
    lateinit var myRef : DatabaseReference
 
 
+   val bookmarkIdList = mutableListOf<String>()
+
+    lateinit var rvAdapter: CategoryRVAdapter
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +41,7 @@ class CategoryListActivity : AppCompatActivity() {
         val itemKeyList = ArrayList<String>()
 
 
-        val rvAdapter = CategoryRVAdapter(baseContext, items, itemKeyList)
+         rvAdapter = CategoryRVAdapter(baseContext, items, itemKeyList, bookmarkIdList)
 
         // Write a message to the database
         val database = Firebase.database
@@ -83,6 +88,7 @@ class CategoryListActivity : AppCompatActivity() {
 //                어댑터를 동기화하는 작업
                 rvAdapter.notifyDataSetChanged()
                 Log.d("Category1ListActivity", items.toString())
+                rvAdapter.notifyDataSetChanged()
 
 
             }
@@ -124,11 +130,11 @@ class CategoryListActivity : AppCompatActivity() {
 
 
                 for(dataModel in dataSnapshot.children){
-                    Log.d("getBookmarkData", dataModel.key.toString())
-                    Log.d("getBookmarkData", dataModel.toString())
+                    bookmarkIdList.add(dataModel.key.toString())
 
 
                 }
+                Log.d("CategoryListActivity", bookmarkIdList.toString())
 
 
             }
