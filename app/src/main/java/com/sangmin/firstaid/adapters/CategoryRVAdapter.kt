@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.sangmin.firstaid.CategoryShowActivity
 import com.sangmin.firstaid.R
 import com.sangmin.firstaid.data.Model
+import com.sangmin.firstaid.utils.FBAuth
 
 
 class CategoryRVAdapter(val context : Context,
@@ -72,6 +73,7 @@ class CategoryRVAdapter(val context : Context,
 
 //         북마크 클릭이벤트 구현
             bookmark.setOnClickListener {
+                Log.d("CategoryRVAdapter", FBAuth.getUid())
                 Toast.makeText(context, key, Toast.LENGTH_SHORT).show()
             }
 
