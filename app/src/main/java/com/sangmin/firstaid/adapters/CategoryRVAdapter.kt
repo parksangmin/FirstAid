@@ -67,6 +67,12 @@ class CategoryRVAdapter(val context : Context,
 //            itemView = category1_item, imageurl1,2,3등의 title을 보여준다
             val Maintitle = itemView.findViewById<TextView>(R.id.textArea)
             val imageView  = itemView.findViewById<ImageView>(R.id.ImgView)
+            val bookmark = itemView.findViewById<ImageView>(R.id.bookmarkImg)
+
+//         북마크 클릭이벤트 구현
+            bookmark.setOnClickListener {
+                Toast.makeText(context, "북마크가 출력되었습니다다", Toast.LENGTH_SHORT).show()
+            }
 
 
 
