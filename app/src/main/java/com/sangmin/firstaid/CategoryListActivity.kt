@@ -138,7 +138,8 @@ class CategoryListActivity : AppCompatActivity() {
                 Log.w("Category1ListActivity", "loadPost:onCancelled", databaseError.toException())
             }
         }
-        FBRef.bookmarkRef.addValueEventListener(postListener)
+//
+        FBRef.bookmarkRef.child(FBAuth.getUid()).addValueEventListener(postListener)
 
 
     }
