@@ -15,6 +15,7 @@ import com.sangmin.firstaid.CategoryShowActivity
 import com.sangmin.firstaid.R
 import com.sangmin.firstaid.data.Model
 import com.sangmin.firstaid.utils.FBAuth
+import com.sangmin.firstaid.utils.FBRef
 
 
 class CategoryRVAdapter(val context : Context,
@@ -75,6 +76,8 @@ class CategoryRVAdapter(val context : Context,
             bookmark.setOnClickListener {
                 Log.d("CategoryRVAdapter", FBAuth.getUid())
                 Toast.makeText(context, key, Toast.LENGTH_SHORT).show()
+
+                FBRef.bookmarkRef.child(FBAuth.getUid()).child(key).setValue("Good")
             }
 
 
