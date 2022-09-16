@@ -16,6 +16,8 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sangmin.firstaid.adapters.CategoryRVAdapter
 import com.sangmin.firstaid.data.Model
+import com.sangmin.firstaid.utils.FBAuth
+import com.sangmin.firstaid.utils.FBRef
 
 
 class CategoryListActivity : AppCompatActivity() {
@@ -105,16 +107,40 @@ class CategoryListActivity : AppCompatActivity() {
 
         rv.layoutManager = LinearLayoutManager(this)
 
+        getBookmarkData()
+
 
 
 
 
     }
 
+    private fun getBookmarkData() {
+
+        //        Firebase Realtime Database 데이터 읽기
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
 
 
 
+                for(dataModel in dataSnapshot.children){
+                    Log.d("getBookmarkData", dataModel.key.toString())
+                    Log.d("getBookmarkData", dataModel.toString())
 
 
+                }
+
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w("Category1ListActivity", "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        FBRef.bookmarkRef.addValueEventListener(postListener)
+
+
+    }
 
 }
