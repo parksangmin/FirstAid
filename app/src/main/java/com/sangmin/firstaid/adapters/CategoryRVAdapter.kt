@@ -43,11 +43,7 @@ class CategoryRVAdapter(val context : Context,
 
 //  아이템의 내용물들을 넣어주는 역할
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
-
-
-
         holder.bindItems(items[position], keyList[position])
-
     }
 
 
@@ -65,11 +61,7 @@ class CategoryRVAdapter(val context : Context,
                 val intent = Intent(context, CategoryShowActivity::class.java)
                 intent.putExtra("url", item.webUrl)
                 itemView.context.startActivity(intent)
-
             }
-
-
-
 
 //            itemView = category1_item, imageurl1,2,3등의 title을 보여준다
             val Maintitle = itemView.findViewById<TextView>(R.id.textArea)
@@ -84,7 +76,7 @@ class CategoryRVAdapter(val context : Context,
 
 //         북마크 클릭이벤트 구현
             bookmark.setOnClickListener {
-                Log.d("CategoryRVAdapter", FBAuth.getUid())
+
                 Toast.makeText(context, key, Toast.LENGTH_SHORT).show()
 
                 if (bookmarkIdList.contains(key)) {
@@ -93,26 +85,14 @@ class CategoryRVAdapter(val context : Context,
                         .child(FBAuth.getUid())
                         .child(key)
                         .removeValue()
-
                 } else {
 //                     북마크가 없을 때
                     FBRef.bookmarkRef
                         .child(FBAuth.getUid())
                         .child(key)
-                        .setValue(items)
-
+                        .setValue(item)
                 }
-
-
-
-
-
-
             }
-
-
-
-
 
             Maintitle.text = item.title
 
