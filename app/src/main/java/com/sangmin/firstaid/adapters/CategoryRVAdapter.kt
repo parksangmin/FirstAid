@@ -29,9 +29,6 @@ class CategoryRVAdapter(val context : Context,
 
 
 
-
-
-
 //   아이템들 하나를 가져온다
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.category1_item,parent, false)
@@ -99,7 +96,7 @@ class CategoryRVAdapter(val context : Context,
                     FBRef.bookmarkRef
                         .child(FBAuth.getUid())
                         .child(key)
-                        .setValue(items)
+                        .setValue(item)
 
                 }
 
