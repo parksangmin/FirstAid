@@ -39,15 +39,10 @@ class CategoryListActivity : AppCompatActivity() {
         // 아이템 키 리스트 추가
         val itemKeyList = ArrayList<String>()
 
-
          rvAdapter = CategoryRVAdapter(baseContext, items, itemKeyList, bookmarkIdList)
 
         // Write a message to the database
         val database = Firebase.database
-
-
-
-
 
         val category = intent.getStringExtra("category")
 
@@ -87,8 +82,6 @@ class CategoryListActivity : AppCompatActivity() {
 //                어댑터를 동기화하는 작업
                 rvAdapter.notifyDataSetChanged()
                 Log.d("CategoryListActivity", items.toString())
-
-
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -98,25 +91,13 @@ class CategoryListActivity : AppCompatActivity() {
         }
         myRef.addValueEventListener(postListener)
 
-
-
         val rv: RecyclerView = findViewById(R.id.rv)
-
-
-
-
-
 
         rv.adapter = rvAdapter
 
         rv.layoutManager = LinearLayoutManager(this)
 
         getBookmarkData()
-
-
-
-
-
     }
 
     private fun getBookmarkData() {
@@ -127,17 +108,11 @@ class CategoryListActivity : AppCompatActivity() {
 
                 bookmarkIdList.clear()
 
-
-
                 for(dataModel in dataSnapshot.children){
                     bookmarkIdList.add(dataModel.key.toString())
-
-
                 }
                 Log.d("Bookmark", bookmarkIdList.toString())
                 rvAdapter.notifyDataSetChanged()
-
-
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
