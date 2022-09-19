@@ -17,21 +17,19 @@ class CategoryShowActivity : AppCompatActivity() {
 
         val webView : WebView = findViewById(R.id.webView)
 
-        webView.settings.apply {
-            javaScriptEnabled = true
-            domStorageEnabled = true
-            setSupportMultipleWindows(true)
-        }
+       webView.settings.javaScriptEnabled = true  // 자바스크립트 허용
+//        웹뷰에서 새 창이 뜨지 않도록 방지하는 구분 //
+        webView.webViewClient = WebViewClient()
+        webView.webChromeClient = WebChromeClient()
 
-        webView.apply {
-            webView.webViewClient = WebViewClient()
-            webChromeClient = WebChromeClient()
-            webView.loadUrl(getUrl.toString())
+        webView.loadUrl(getUrl.toString())
 
 
-        }
+
 
 
 
     }
+
+
 }

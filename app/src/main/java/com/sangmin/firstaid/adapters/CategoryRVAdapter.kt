@@ -99,7 +99,7 @@ class CategoryRVAdapter(val context : Context,
                     FBRef.bookmarkRef
                         .child(FBAuth.getUid())
                         .child(key)
-                        .setValue(item)
+                        .setValue(items)
 
                 }
 

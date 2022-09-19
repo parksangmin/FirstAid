@@ -72,10 +72,15 @@ class BookmarkFragment : Fragment() {
 
 
 
+
+
+
+
                 for (dataModel in dataSnapshot.children) {
 
                     Log.d(TAG, dataModel.toString())
                     val item = dataModel.getValue(Model::class.java)
+
                     //     3. 전체 켄테츠 중에서, 사용자가 북마크한 정보만 보여줌!
                     if(bookmarkIdList.contains(dataModel.key.toString())){
                         items.add(item!!)
@@ -88,11 +93,9 @@ class BookmarkFragment : Fragment() {
 
 
 
-
                 }
                 rvAdapter.notifyDataSetChanged()
 //                어댑터를 동기화하는 작업
-
 
 
 
@@ -120,8 +123,12 @@ class BookmarkFragment : Fragment() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-
                 bookmarkIdList.clear()
+
+
+
+
+
 
 
                 for(dataModel in dataSnapshot.children){
@@ -134,8 +141,10 @@ class BookmarkFragment : Fragment() {
 
                 }
 
-//                1. 전체 카테고리에 있는 컨텐츠 데이터들을 다 가져옴!
+                //    1. 전체 카테고리에 있는 컨텐츠 데이터들을 다 가져옴!
                 getCategoryData()
+
+
 
 
 

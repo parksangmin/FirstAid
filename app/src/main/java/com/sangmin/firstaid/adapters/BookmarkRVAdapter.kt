@@ -77,8 +77,9 @@ class BookmarkRVAdapter(val context : Context,
 
             if (bookmarkIdList.contains(key)){
                 bookmark.setImageResource(R.drawable.ic_baseline_bookmark_24)
+            } else {
+                bookmark.setImageResource(R.drawable.bookmark_white)
             }
-
 
 
 
