@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener
 import com.sangmin.firstaid.R
 import com.sangmin.firstaid.adapters.BoardLVAdapter
 import com.sangmin.firstaid.board.BoardActivity
+import com.sangmin.firstaid.board.BoardInsideActivity
 import com.sangmin.firstaid.data.BoardModel
 import com.sangmin.firstaid.databinding.FragmentBoardBinding
 import com.sangmin.firstaid.utils.FBAuth
@@ -56,7 +57,29 @@ class BoardFragment : Fragment(){
         BoardAdapter = BoardLVAdapter(boardDataList)
         binding.boardListView.adapter = BoardAdapter
 
+
+//        첫번쨰 방법으로는 listView에 있는 데이터 title content time 다 다른 액티비티로 전달해줘서 만들기
+        binding.boardListView.setOnItemClickListener { parent, view, position, id ->
+
+            val intent = Intent(context, BoardInsideActivity::class.java)
+            intent.putExtra("title", boardDataList[position].title)
+            intent.putExtra("content", boardDataList[position].content)
+            intent.putExtra("time", boardDataList[position].time)
+            startActivity(intent)
+
+        //         두번째 방법으로는 Firebase에 있는 board에 대한 데이터의 id를 기반으로 다시 데이터를 받아오는 방법
+
+
+        }
+
+
+
+
         getFBBoardData()
+
+
+
+
     }
 
 
@@ -78,6 +101,7 @@ class BoardFragment : Fragment(){
                     boardDataList.add(item!!)
 
                 }
+                boardDataList.reverse()
                 BoardAdapter.notifyDataSetChanged()
 
                 Log.d(TAG, boardDataList.toString())
