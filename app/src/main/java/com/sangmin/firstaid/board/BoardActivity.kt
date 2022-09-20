@@ -24,6 +24,8 @@ class BoardActivity : AppCompatActivity() {
 
     private val TAG = BoardActivity::class.java.simpleName
 
+    private var isImageUpload = false
+
 
 
 
@@ -60,8 +62,12 @@ class BoardActivity : AppCompatActivity() {
 
 
             Toast.makeText(this, "게시글 입력 완료", Toast.LENGTH_SHORT).show()
+            if (isImageUpload == true){
 
-            imageUpload(key)
+                imageUpload(key)
+
+            }
+
 
             finish()
 
@@ -70,6 +76,7 @@ class BoardActivity : AppCompatActivity() {
         binding.boardImg.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(gallery, 100)
+            isImageUpload = true
 
         }
     }
@@ -79,6 +86,7 @@ class BoardActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == RESULT_OK && requestCode == 100){
             binding.boardImg.setImageURI(data?.data)
+
 
         }
     }
