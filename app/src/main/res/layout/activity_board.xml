@@ -53,6 +53,7 @@
                     android:imeOptions="actionDone"/>
 
                 <ImageView
+                    android:id="@+id/boardImg"
                     android:layout_width="300dp"
                     android:layout_height="200dp"
                     android:layout_gravity="center"

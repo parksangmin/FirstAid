@@ -107,6 +107,7 @@ class BoardFragment : Fragment(){
                     boardKeyList.add(dataModel.key.toString())
 
                 }
+                boardKeyList.reverse()
                 boardDataList.reverse()
                 BoardAdapter.notifyDataSetChanged()
 

@@ -1,21 +1,30 @@
 package com.sangmin.firstaid.board
 
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.sangmin.firstaid.R
 import com.sangmin.firstaid.data.BoardModel
 import com.sangmin.firstaid.databinding.ActivityBoardBinding
 import com.sangmin.firstaid.utils.FBAuth
 import com.sangmin.firstaid.utils.FBRef
+import java.io.ByteArrayOutputStream
 
 class BoardActivity : AppCompatActivity() {
 
     lateinit var binding:ActivityBoardBinding
 
     private val TAG = BoardActivity::class.java.simpleName
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,16 +46,66 @@ class BoardActivity : AppCompatActivity() {
 //            key
 //            boardModel(title, content, uid, time)
 
+//            파이어베이스 store에 이미지를 저장하고 싶습니다
+//            만약에 내가 게시글을 클릭했을 때, 게시글에 대한 정보를 받아와야하는데
+//            이미지 이름에 대한 정보를 모르기 때문에
+//            이미지 이름을 문서의 key값으로 해줘서 이미지에 대한 정보를 찾기 쉽게 해놓음.
+
+            val key = FBRef.boardRef.push().key.toString()
+
 
             FBRef.boardRef
-                .push()
+                .child(key)
                 .setValue(BoardModel(title, content, uid, time))
 
 
             Toast.makeText(this, "게시글 입력 완료", Toast.LENGTH_SHORT).show()
 
+            imageUpload(key)
+
             finish()
 
         }
+
+        binding.boardImg.setOnClickListener {
+            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            startActivityForResult(gallery, 100)
+
+        }
     }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == RESULT_OK && requestCode == 100){
+            binding.boardImg.setImageURI(data?.data)
+
+        }
+    }
+
+    private fun imageUpload(key : String){
+        // Get the data from an ImageView as bytes
+        val storage = Firebase.storage
+        val storageRef = storage.reference
+        val mountainsRef = storageRef.child(key + ".png")
+
+        val imageView = binding.boardImg
+
+        imageView.isDrawingCacheEnabled = true
+        imageView.buildDrawingCache()
+        val bitmap = (imageView.drawable as BitmapDrawable).bitmap
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+
+        var uploadTask = mountainsRef.putBytes(data)
+        uploadTask.addOnFailureListener {
+            // Handle unsuccessful uploads
+        }.addOnSuccessListener { taskSnapshot ->
+            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+            // ...
+        }
+
+    }
+
 }
