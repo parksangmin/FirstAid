@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.sangmin.firstaid.R
+import com.sangmin.firstaid.adapters.BoardLVAdapter
 import com.sangmin.firstaid.board.BoardActivity
+import com.sangmin.firstaid.data.BoardModel
 import com.sangmin.firstaid.databinding.FragmentBoardBinding
 
 class BoardFragment : Fragment(){
@@ -29,9 +31,17 @@ class BoardFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         binding.writeBtn.setOnClickListener {
             val intent = Intent(context, BoardActivity::class.java)
             startActivity(intent)
         }
+
+        val boardList = mutableListOf<BoardModel>()
+        boardList.add(BoardModel("a","B","c", "d"))
+
+        val BoardAdapter = BoardLVAdapter(boardList)
+        binding.boardListView.adapter = BoardAdapter
     }
 }

@@ -9,11 +9,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <ListView
+            android:id="@+id/boardListView"
+            android:layout_width="match_parent"
+            android:layout_height="565dp" />
 
-        <TextView
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,20 +25,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
+
             <ImageView
                 android:id="@+id/writeBtn"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/writting" />
+                android:src="@drawable/writting"/>
+
 
 
 
         </LinearLayout>
-
-
-
 
 
 
