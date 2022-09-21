@@ -4,7 +4,7 @@
     package="com.sangmin.firstaid">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -17,8 +17,12 @@
         android:theme="@style/Theme.FirstAid"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity android:name=".board.BoardInsideActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".board.BoardEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".board.BoardInsideActivity"
+            android:exported="false" />
         <activity
             android:name=".board.BoardActivity"
             android:exported="false" />
