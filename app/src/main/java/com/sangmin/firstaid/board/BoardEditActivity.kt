@@ -27,7 +27,7 @@ class BoardEditActivity : AppCompatActivity() {
 
     private val TAG = BoardEditActivity::class.java.simpleName
 
-//    private lateinit var writerUid : String
+    private lateinit var writerUid : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -56,7 +56,7 @@ class BoardEditActivity : AppCompatActivity() {
 
                 binding.titleEdt.setText(dataModel?.title)
                 binding.contentEdt.setText(dataModel?.content)
-//                writerUid = dataModel!!.uid
+                writerUid = dataModel!!.uid
 
 
             }
@@ -108,7 +108,7 @@ class BoardEditActivity : AppCompatActivity() {
             .setValue(
                 BoardModel(binding.titleEdt.text.toString(),
                     binding.contentEdt.text.toString(),
-                    FBAuth.getUid(),
+                    writerUid,
                     FBAuth.getTime()))
 
         Toast.makeText(this, "수정완료", Toast.LENGTH_SHORT).show()

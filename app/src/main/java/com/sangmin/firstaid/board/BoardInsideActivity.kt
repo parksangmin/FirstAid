@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnCompleteListener
@@ -20,6 +21,7 @@ import com.google.firebase.storage.ktx.storage
 import com.sangmin.firstaid.R
 import com.sangmin.firstaid.data.BoardModel
 import com.sangmin.firstaid.databinding.ActivityBoardInsideBinding
+import com.sangmin.firstaid.utils.FBAuth
 import com.sangmin.firstaid.utils.FBRef
 import java.lang.Exception
 
@@ -89,6 +91,19 @@ class BoardInsideActivity : AppCompatActivity() {
                         binding.textTxt.text = dataModel!!.content
                         binding.timeTxt.text = dataModel!!.time
 
+                        val myUid = FBAuth.getUid()
+                        val writerUid = dataModel.uid
+
+                        if (myUid.equals(writerUid)){
+
+                            Toast.makeText(baseContext, "내가 끌쓴이임", Toast.LENGTH_SHORT).show()
+                            binding.boardsetImg.isVisible = true
+                        } else {
+                            Toast.makeText(baseContext, "내가 글쓴이 아님", Toast.LENGTH_SHORT).show()
+                        }
+
+
+
                     } catch (e : Exception) {
 
                         Log.d(TAG, "삭제완료")
@@ -123,12 +138,6 @@ class BoardInsideActivity : AppCompatActivity() {
             .setView(mDialogView)
             .setTitle("게시글 수정/삭제")
             .create()
-
-
-
-
-
-
 
 
         mDialogView.findViewById<Button>(R.id.editBtn)?.setOnClickListener{

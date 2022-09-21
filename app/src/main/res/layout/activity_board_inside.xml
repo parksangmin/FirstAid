@@ -26,6 +26,7 @@
 
             <ImageView
                 android:id="@+id/boardsetImg"
+                android:visibility="invisible"
                 android:layout_width="56dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/menu_icon" />
