@@ -1,6 +1,7 @@
 package com.sangmin.firstaid.board
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
@@ -35,8 +36,9 @@ class BoardInsideActivity : AppCompatActivity() {
 
         binding.boardsetImg.setOnClickListener {
             showDialog()
-
         }
+
+
 
 
 
@@ -122,6 +124,8 @@ class BoardInsideActivity : AppCompatActivity() {
 
 
         val alertDialog = mBuilder.show()
+
+
         alertDialog.findViewById<Button>(R.id.editBtn)?.setOnClickListener{
             Toast.makeText(this, "aa", Toast.LENGTH_SHORT).show()
 
@@ -129,9 +133,15 @@ class BoardInsideActivity : AppCompatActivity() {
         alertDialog.findViewById<Button>(R.id.delBtn)?.setOnClickListener {
             FBRef.boardRef.child(key).removeValue()
             Toast.makeText(this, "삭제완료", Toast.LENGTH_SHORT).show()
-            finish()
+
+            Handler().postDelayed({
+                finish()
+            }, 2000)
+
 
 
         }
     }
+
+
 }
