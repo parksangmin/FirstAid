@@ -119,35 +119,37 @@ class BoardInsideActivity : AppCompatActivity() {
     private fun showDialog(){
 
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null)
-        val mBuilder = AlertDialog.Builder(this)
+        val alertDialog = AlertDialog.Builder(this)
             .setView(mDialogView)
             .setTitle("게시글 수정/삭제")
-
-
-
-        val alertDialog = mBuilder.show()
-
+            .create()
 
 
 
 
-        alertDialog.findViewById<Button>(R.id.editBtn)?.setOnClickListener{
+
+
+
+
+        mDialogView.findViewById<Button>(R.id.editBtn)?.setOnClickListener{
             Toast.makeText(this, "수정 버튼을 눌렀습니다.", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, BoardEditActivity::class.java)
             intent.putExtra("key", key)
+            alertDialog.dismiss()
             startActivity(intent)
 
         }
-        alertDialog.findViewById<Button>(R.id.delBtn)?.setOnClickListener {
+       mDialogView.findViewById<Button>(R.id.delBtn)?.setOnClickListener {
             FBRef.boardRef.child(key).removeValue()
             Toast.makeText(this, "삭제완료", Toast.LENGTH_SHORT).show()
+            alertDialog.dismiss()
             finish()
 
 
-
-
         }
+
+        alertDialog.show()
     }
 
 

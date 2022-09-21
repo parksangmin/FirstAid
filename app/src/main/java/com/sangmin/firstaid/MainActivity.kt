@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
@@ -13,6 +14,7 @@ import com.sangmin.firstaid.adapters.MainViewPagerAdapter
 import com.sangmin.firstaid.auth.IntroActivity
 import com.sangmin.firstaid.auth.LoginActivity
 import com.sangmin.firstaid.databinding.ActivityMainBinding
+import com.sangmin.firstaid.setting.SettingActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,6 +35,12 @@ class MainActivity : AppCompatActivity() {
 
         mPagerAdapter = MainViewPagerAdapter(this)
         mBinding.mainViewPager.adapter = mPagerAdapter
+
+
+        findViewById<ImageView>(R.id.logoutImg).setOnClickListener {
+            val intent = Intent(this, SettingActivity::class.java)
+            startActivity(intent)
+        }
 
 
 //        뷰페이저 연동 event
@@ -58,6 +66,10 @@ class MainActivity : AppCompatActivity() {
 
             return@setOnItemSelectedListener true
         }
+
+
+
+
 
 
 
