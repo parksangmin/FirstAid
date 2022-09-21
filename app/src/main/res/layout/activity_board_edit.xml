@@ -64,13 +64,13 @@
                     android:src="@drawable/plus" />
 
                 <Button
-                    android:id="@+id/writeBtn"
+                    android:id="@+id/editBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/background_radius_orange"
-                    android:text="입력" />
+                    android:text="수정" />
 
 
 
