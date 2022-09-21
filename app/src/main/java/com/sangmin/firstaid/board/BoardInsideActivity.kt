@@ -19,12 +19,15 @@ import com.sangmin.firstaid.R
 import com.sangmin.firstaid.data.BoardModel
 import com.sangmin.firstaid.databinding.ActivityBoardInsideBinding
 import com.sangmin.firstaid.utils.FBRef
+import java.lang.Exception
 
 class BoardInsideActivity : AppCompatActivity() {
 
     private val TAG = BoardInsideActivity::class.java.simpleName
 
     private lateinit var binding : ActivityBoardInsideBinding
+
+    private lateinit var key : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +41,9 @@ class BoardInsideActivity : AppCompatActivity() {
 
 
 //         두번째 방법
-        val key = intent.getStringExtra("key")
-        getBoardData(key.toString())
-        getImageData(key.toString())
+        key = intent.getStringExtra("key").toString()
+        getBoardData(key)
+        getImageData(key)
 
     }
 
@@ -75,12 +78,22 @@ class BoardInsideActivity : AppCompatActivity() {
             val postListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                    val dataModel = dataSnapshot.getValue(BoardModel::class.java)
-                    Log.d(TAG, dataModel!!.title)
+                    try {
+                        val dataModel = dataSnapshot.getValue(BoardModel::class.java)
+                        Log.d(TAG, dataModel!!.title)
 
-                    binding.titleTxt.text = dataModel!!.title
-                    binding.textTxt.text = dataModel!!.content
-                    binding.timeTxt.text = dataModel!!.time
+                        binding.titleTxt.text = dataModel!!.title
+                        binding.textTxt.text = dataModel!!.content
+                        binding.timeTxt.text = dataModel!!.time
+
+                    } catch (e : Exception) {
+
+                        Log.d(TAG, "삭제완료")
+
+
+                    }
+
+
 
 
 
@@ -88,7 +101,7 @@ class BoardInsideActivity : AppCompatActivity() {
 
 
 
-                override fun onCancelled(databaseError: DatabaseError) {
+               override fun onCancelled(databaseError: DatabaseError) {
                     // Getting Post failed, log a message
                     Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
 
@@ -114,7 +127,10 @@ class BoardInsideActivity : AppCompatActivity() {
 
         }
         alertDialog.findViewById<Button>(R.id.delBtn)?.setOnClickListener {
-            Toast.makeText(this, "bb", Toast.LENGTH_SHORT).show()
+            FBRef.boardRef.child(key).removeValue()
+            Toast.makeText(this, "삭제완료", Toast.LENGTH_SHORT).show()
+            finish()
+
 
         }
     }
