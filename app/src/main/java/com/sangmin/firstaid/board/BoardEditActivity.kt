@@ -102,6 +102,7 @@ class BoardEditActivity : AppCompatActivity() {
 
     private fun editBoardData(key : String){
 
+//        writerUid 말고 FBAuth.getuid로 해보기
         FBRef.boardRef
             .child(key)
             .setValue(
