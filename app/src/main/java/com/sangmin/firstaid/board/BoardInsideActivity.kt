@@ -2,7 +2,10 @@ package com.sangmin.firstaid.board
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
@@ -27,19 +30,12 @@ class BoardInsideActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_board_inside)
 
-//  첫번쨰 방법
-//        val title = intent.getStringExtra("title").toString()
-//        val content = intent.getStringExtra("content").toString()
-//        val time = intent.getStringExtra("time").toString()
-//
-//        binding.titleTxt.text = title
-//        binding.textTxt.text = content
-//        binding.timeTxt.text = time
+        binding.boardsetImg.setOnClickListener {
+            showDialog()
+
+        }
 
 
-//        Log.d(TAG, title)
-//        Log.d(TAG, content)
-//        Log.d(TAG, time)
 
 //         두번째 방법
         val key = intent.getStringExtra("key")
@@ -101,5 +97,25 @@ class BoardInsideActivity : AppCompatActivity() {
 //
             FBRef.boardRef.child(key).addValueEventListener(postListener)
 
+    }
+
+
+    private fun showDialog(){
+
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null)
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialogView)
+            .setTitle("게시글 수정/삭제")
+
+
+        val alertDialog = mBuilder.show()
+        alertDialog.findViewById<Button>(R.id.editBtn)?.setOnClickListener{
+            Toast.makeText(this, "aa", Toast.LENGTH_SHORT).show()
+
+        }
+        alertDialog.findViewById<Button>(R.id.delBtn)?.setOnClickListener {
+            Toast.makeText(this, "bb", Toast.LENGTH_SHORT).show()
+
+        }
     }
 }
