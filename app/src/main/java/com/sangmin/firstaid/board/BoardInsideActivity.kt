@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
@@ -20,6 +21,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.sangmin.firstaid.R
 import com.sangmin.firstaid.data.BoardModel
+import com.sangmin.firstaid.data.CommentModel
 import com.sangmin.firstaid.databinding.ActivityBoardInsideBinding
 import com.sangmin.firstaid.utils.FBAuth
 import com.sangmin.firstaid.utils.FBRef
@@ -50,6 +52,30 @@ class BoardInsideActivity : AppCompatActivity() {
         getBoardData(key)
         getImageData(key)
 
+        binding.commentImg.setOnClickListener {
+            insertComment(key)
+        }
+
+
+
+    }
+
+    fun insertComment(key : String){
+//        comment
+//        -BoardKey
+//        -commentkey
+//        -commentData
+
+        FBRef
+            .commentRef
+            .child(key)
+            .push()
+            .setValue(CommentModel(binding.commentEdt.text.toString()))
+
+
+        Toast.makeText(this, "댓글 입력 완료", Toast.LENGTH_SHORT).show()
+        binding.commentEdt.setText("")
+
     }
 
     private fun getImageData(key: String){
@@ -67,6 +93,8 @@ class BoardInsideActivity : AppCompatActivity() {
                     .load(task.result)
                     .into(imageView)
             } else {
+
+                binding.getImg.isInvisible = false
 
             }
         })
