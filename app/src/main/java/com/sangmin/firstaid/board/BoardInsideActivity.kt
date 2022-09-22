@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.sangmin.firstaid.R
+import com.sangmin.firstaid.adapters.CommentLVAdapter
 import com.sangmin.firstaid.data.BoardModel
 import com.sangmin.firstaid.data.CommentModel
 import com.sangmin.firstaid.databinding.ActivityBoardInsideBinding
@@ -34,6 +35,10 @@ class BoardInsideActivity : AppCompatActivity() {
     private lateinit var binding : ActivityBoardInsideBinding
 
     private lateinit var key : String
+
+    private val commenDatatList = mutableListOf<CommentModel>()
+
+    private lateinit var commentAdapter : CommentLVAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +61,51 @@ class BoardInsideActivity : AppCompatActivity() {
             insertComment(key)
         }
 
+        getCommentData(key)
+
+        commentAdapter = CommentLVAdapter(commenDatatList)
+        binding.commentLV.adapter = commentAdapter
+
+
+
+
+
+
+
+
+    }
+
+    fun getCommentData(key : String){
+
+        //        Firebase Realtime Database 데이터 읽기
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                commenDatatList.clear()
+
+
+                for(dataModel in dataSnapshot.children){
+                    val item = dataModel.getValue(CommentModel::class.java)
+                    commenDatatList.add((item!!))
+
+
+                }
+
+                commentAdapter.notifyDataSetChanged()
+
+
+            }
+
+
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+
+            }
+        }
+//
+        FBRef.commentRef.child(key).addValueEventListener(postListener)
 
 
     }
@@ -70,7 +120,10 @@ class BoardInsideActivity : AppCompatActivity() {
             .commentRef
             .child(key)
             .push()
-            .setValue(CommentModel(binding.commentEdt.text.toString()))
+            .setValue(CommentModel(binding.commentEdt.text.toString(),
+                FBAuth.getTime()
+            ))
+
 
 
         Toast.makeText(this, "댓글 입력 완료", Toast.LENGTH_SHORT).show()
