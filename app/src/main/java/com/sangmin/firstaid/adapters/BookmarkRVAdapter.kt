@@ -18,8 +18,10 @@ import com.sangmin.firstaid.data.Model
 import com.sangmin.firstaid.utils.FBAuth
 import com.sangmin.firstaid.utils.FBRef
 
+// 추가4
 class BookmarkRVAdapter(val context : Context,
-                        val items : ArrayList<Model>
+                        val items : ArrayList<Model>,
+                        val bookmarkIdList : MutableList<String>
 
 ) : RecyclerView.Adapter<BookmarkRVAdapter.Viewholder>(){
 
@@ -36,8 +38,8 @@ class BookmarkRVAdapter(val context : Context,
     //  아이템의 내용물들을 넣어주는 역할
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
 
-
-        holder.bindItems(items[position])
+// 추가3
+        holder.bindItems(items[position],bookmarkIdList[position])
 
     }
 
@@ -49,7 +51,8 @@ class BookmarkRVAdapter(val context : Context,
     }
 
     inner class  Viewholder(itemView : View) : RecyclerView.ViewHolder(itemView){
-        fun bindItems(item : Model) {
+//        추가 2
+        fun bindItems(item : Model, key:String) {
 
             itemView.setOnClickListener {
                 Toast.makeText(context, item.title, Toast.LENGTH_SHORT).show()
@@ -77,7 +80,13 @@ class BookmarkRVAdapter(val context : Context,
 
 //            북마크 해지 이벤트 처리
             bookmark.setOnClickListener {
-                bookmark.setImageResource(R.drawable.bookmark_white)
+//                bookmark.setImageResource(R.drawable.bookmark_white)
+
+//                추가1
+                FBRef.bookmarkRef
+                    .child(FBAuth.getUid())
+                    .child(key)
+                    .removeValue()
             }
 
 

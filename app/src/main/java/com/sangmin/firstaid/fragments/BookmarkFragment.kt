@@ -29,6 +29,9 @@ class BookmarkFragment : Fragment() {
 
     val items = ArrayList<Model>()
 
+//    추가 5
+    val bookmarkIdList = mutableListOf<String>()
+
     lateinit var rvAdapter : BookmarkRVAdapter
 
 
@@ -52,8 +55,8 @@ class BookmarkFragment : Fragment() {
         getBookmarkData()
 
 
-
-        rvAdapter = BookmarkRVAdapter(requireContext(), items)
+//     추가 6
+        rvAdapter = BookmarkRVAdapter(requireContext(), items,bookmarkIdList)
 
         val rv : RecyclerView = binding.BookmarkRV
         rv.adapter = rvAdapter
